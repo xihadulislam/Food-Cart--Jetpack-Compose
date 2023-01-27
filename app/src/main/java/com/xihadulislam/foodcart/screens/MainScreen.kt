@@ -34,6 +34,7 @@ fun MainScreen(navController: NavHostController) {
     val bottomNavController = rememberNavController()
 
     Scaffold(
+
         content = {
             NavHost(
                 navController = bottomNavController,

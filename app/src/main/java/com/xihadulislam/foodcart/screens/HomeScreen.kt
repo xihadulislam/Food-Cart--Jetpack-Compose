@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -25,6 +26,7 @@ import androidx.navigation.NavController
 import com.cemreonur.ub10_youtube.CategoryData
 import com.xihadulislam.foodcart.Destinations
 import com.xihadulislam.foodcart.R
+import com.xihadulislam.foodcart.data.popularList
 import com.xihadulislam.foodcart.models.PopularData
 import com.xihadulislam.foodcart.ui.theme.*
 
@@ -34,93 +36,66 @@ fun HomeScreen(navController: NavController) {
 
     val scrollState = rememberScrollState()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 16.dp, top = 2.dp, end = 16.dp)
-    )
-    {
-
-        Column(modifier = Modifier.verticalScroll(state = scrollState)) {
-            Spacer(modifier = Modifier.height(12.dp))
+    Scaffold(
+        topBar = {
             Header()
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OrderNowBox()
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Text(
-                text = "Categories",
-                style = Typography.body1,
-                fontSize = 22.sp,
-                color = BlackTextColor
+        },
+        content = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 2.dp, end = 16.dp)
             )
+            {
 
-            Spacer(modifier = Modifier.height(20.dp))
+                Column(modifier = Modifier.verticalScroll(state = scrollState)) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    OrderNowBox()
 
-            CategoryList(
-                categories = listOf(
-                    CategoryData(redId = R.drawable.pizza, title = "Pizza"),
-                    CategoryData(redId = R.drawable.hamburger, title = "Burger"),
-                    CategoryData(redId = R.drawable.drinks, title = "Drinks")
-                ),
-            )
+                    Spacer(modifier = Modifier.height(30.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "Popular",
-                style = Typography.body1,
-                fontSize = 22.sp,
-                color = BlackTextColor
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-
-            PopularList(
-                popularList = listOf(
-                    PopularData(
-                        R.drawable.salad_pesto_pizza,
-                        title = "Salad Pesto Pizza",
-                        description = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.",
-                        price = 10.55,
-                        calori = 540.0,
-                        scheduleTime = 20.0,
-                        rate = 5.0,
-                        ingradients = listOf(
-                            R.drawable.ing1,
-                            R.drawable.ing2,
-                            R.drawable.ing3,
-                            R.drawable.ing4,
-                            R.drawable.ing5,
-                        )
-                    ),
-                    PopularData(
-                        R.drawable.primavera_pizza,
-                        title = "Primavera Pizza",
-                        description = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.",
-                        price = 12.55,
-                        calori = 440.0,
-                        scheduleTime = 30.0,
-                        rate = 4.5,
-                        ingradients = listOf(
-                            R.drawable.ing1,
-                            R.drawable.ing2,
-                            R.drawable.ing3,
-                            R.drawable.ing4,
-                            R.drawable.ing5,
-                        )
+                    Text(
+                        text = "Categories",
+                        style = Typography.body1,
+                        fontSize = 22.sp,
+                        color = BlackTextColor
                     )
-                ), navController = navController
-            )
 
-            Spacer(modifier = Modifier.height(50.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    CategoryList(
+                        categories = listOf(
+                            CategoryData(redId = R.drawable.pizza, title = "Pizza"),
+                            CategoryData(redId = R.drawable.hamburger, title = "Burger"),
+                            CategoryData(redId = R.drawable.drinks, title = "Drinks")
+                        ),
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Text(
+                        text = "Popular",
+                        style = Typography.body1,
+                        fontSize = 22.sp,
+                        color = BlackTextColor
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+
+                    PopularList(
+                        popularList = popularList, navController = navController
+                    )
+
+                    Spacer(modifier = Modifier.height(50.dp))
+                }
+
+
+            }
         }
+    )
 
 
-    }
 }
 
 @Composable
@@ -131,7 +106,8 @@ fun Header() {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(end = 16.dp)
+            .height(55.dp)
+            .padding(10.dp)
     ) {
 
         BoxWithRes(resId = R.drawable.menu, description = "Menu")
@@ -418,6 +394,7 @@ fun PopularItem(popularData: PopularData, navController: NavController) {
                         )
                     }
                 }
+
             }
 
 

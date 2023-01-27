@@ -10,6 +10,7 @@ fun FoodCartTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         typography = Typography,
         shapes = Shapes,
+        colors = LightColors,
         content = content
     )
 }

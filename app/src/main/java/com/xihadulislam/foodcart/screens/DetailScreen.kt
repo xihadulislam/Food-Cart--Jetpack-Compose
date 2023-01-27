@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,184 +30,198 @@ import com.xihadulislam.foodcart.ui.theme.*
 @Composable
 fun DetailScreen(navController: NavController) {
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(start = 30.dp, top = 48.dp, end = 30.dp)
-    )
-    {
+    Scaffold(
+        topBar = {
+            DetailHeader(navController = navController)
+        },
+        content = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White)
+                    .padding(start = 30.dp, top = 0.dp, end = 30.dp)
+            )
+            {
 
-        val data =
-            navController.previousBackStackEntry?.arguments?.getParcelable<PopularData>(Destinations.DetailArgs.foodData)
-
-        if (data != null) {
-
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(
-                        rememberScrollState()
+                val data =
+                    navController.previousBackStackEntry?.arguments?.getParcelable<PopularData>(
+                        Destinations.DetailArgs.foodData
                     )
-            ) {
 
-                DetailHeader(navController = navController)
+                if (data != null) {
 
-                Spacer(modifier = Modifier.height(32.dp))
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(
+                                rememberScrollState()
+                            )
+                    ) {
 
-                Image(
-                    painter = painterResource(id = data.resId),
-                    contentDescription = "",
-                    modifier = Modifier.size(275.dp)
-                )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(80.dp)
-                )
-                {
-                    Column(verticalArrangement = Arrangement.SpaceBetween) {
-
-                        Text(
-                            text = data.title, style = Typography.body1,
-                            fontSize = 22.sp,
-                            color = BlackTextColor
+                        Image(
+                            painter = painterResource(id = data.resId),
+                            contentDescription = "",
+                            modifier = Modifier.size(275.dp)
                         )
 
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                        Box(
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
-                                .height(40.dp),
-                            contentAlignment = Alignment.Center
+                                .fillMaxWidth()
+                                .height(80.dp)
                         )
                         {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(
-                                    text = "$",
-                                    style = Typography.body1,
-                                    fontSize = 14.sp,
-                                    color = Orange500
-                                )
+                            Column(verticalArrangement = Arrangement.SpaceBetween) {
 
                                 Text(
-                                    text = "${data.price}",
-                                    style = Typography.body1,
-                                    fontSize = 20.sp,
+                                    text = data.title, style = Typography.body1,
+                                    fontSize = 22.sp,
                                     color = BlackTextColor
                                 )
+
+
+                                Box(
+                                    modifier = Modifier
+                                        .height(40.dp),
+                                    contentAlignment = Alignment.Center
+                                )
+                                {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Text(
+                                            text = "$",
+                                            style = Typography.body1,
+                                            fontSize = 14.sp,
+                                            color = Orange500
+                                        )
+
+                                        Text(
+                                            text = "${data.price}",
+                                            style = Typography.body1,
+                                            fontSize = 20.sp,
+                                            color = BlackTextColor
+                                        )
+                                    }
+                                }
                             }
+
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+
+                                BoxWithRes(
+                                    resId = R.drawable.minus,
+                                    description = "Minus",
+                                    iconSize = 16,
+                                    boxSize = 36,
+                                    iconColor = BlackTextColor
+                                )
+
+                                Spacer(modifier = Modifier.width(14.dp))
+
+                                Text(
+                                    text = "01",
+                                    style = Typography.body2,
+                                    fontSize = 18.sp,
+                                    color = BlackTextColor
+                                )
+
+                                Spacer(modifier = Modifier.width(14.dp))
+
+                                BoxWithRes(
+                                    resId = R.drawable.add,
+                                    description = "Add",
+                                    iconSize = 16,
+                                    boxSize = 36,
+                                    iconColor = Color.White,
+                                    bgColor = Yellow500
+                                )
+                            }
+
                         }
-                    }
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-
-                        BoxWithRes(
-                            resId = R.drawable.minus,
-                            description = "Minus",
-                            iconSize = 16,
-                            boxSize = 36,
-                            iconColor = BlackTextColor
-                        )
-
-                        Spacer(modifier = Modifier.width(14.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
                         Text(
-                            text = "01",
-                            style = Typography.body2,
-                            fontSize = 18.sp,
-                            color = BlackTextColor
+                            text = data.description,
+                            style = Typography.h5,
+                            fontSize = 16.sp,
+                            color = TextColor,
+                            modifier = Modifier.fillMaxWidth()
                         )
 
-                        Spacer(modifier = Modifier.width(14.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                        BoxWithRes(
-                            resId = R.drawable.add,
-                            description = "Add",
-                            iconSize = 16,
-                            boxSize = 36,
-                            iconColor = Color.White,
-                            bgColor = Yellow500
+                        DetailBox(data = data)
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Text(
+                            text = "Ingradients",
+                            style = Typography.body1,
+                            fontSize = 22.sp,
+                            color = BlackTextColor,
+                            modifier = Modifier.fillMaxWidth()
                         )
-                    }
 
-                }
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                Spacer(modifier = Modifier.height(20.dp))
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        )
+                        {
+                            items(data.ingradients.size) { index ->
+                                Box(
+                                    modifier = Modifier
+                                        .size(56.dp)
+                                        .clip(RoundedCornerShape(10.dp))
+                                        .background(
+                                            CardItemBg
+                                        ), contentAlignment = Alignment.Center
+                                )
+                                {
+                                    Image(
+                                        painter = painterResource(id = data.ingradients[index]),
+                                        contentDescription = "",
+                                        modifier = Modifier.size(width = 30.dp, height = 24.dp)
+                                    )
+                                }
+                            }
+                        }
 
-                Text(
-                    text = data.description,
-                    style = Typography.h5,
-                    fontSize = 16.sp,
-                    color = TextColor,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-                DetailBox(data = data)
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Text(
-                    text = "Ingradients",
-                    style = Typography.body1,
-                    fontSize = 22.sp,
-                    color = BlackTextColor,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                LazyRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                )
-                {
-                    items(data.ingradients.size) { index ->
                         Box(
                             modifier = Modifier
-                                .size(56.dp)
-                                .clip(RoundedCornerShape(10.dp))
+                                .size(width = 203.dp, height = 56.dp)
+                                .clip(RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp))
                                 .background(
-                                    CardItemBg
+                                    Yellow500
                                 ), contentAlignment = Alignment.Center
                         )
                         {
-                            Image(
-                                painter = painterResource(id = data.ingradients[index]),
-                                contentDescription = "",
-                                modifier = Modifier.size(width = 30.dp, height = 24.dp)
+                            Text(
+                                text = "Add to card",
+                                style = Typography.body1,
+                                color = Color.White
                             )
                         }
+
                     }
+
                 }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Box(
-                    modifier = Modifier
-                        .size(width = 203.dp, height = 56.dp)
-                        .clip(RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp))
-                        .background(
-                            Yellow500
-                        ), contentAlignment = Alignment.Center
-                )
-                {
-                    Text(text = "Add to card", style = Typography.body1, color = Color.White)
-                }
-
             }
-
         }
-    }
+    )
+
+
 }
 
 @Composable
@@ -216,6 +231,8 @@ fun DetailHeader(navController: NavController) {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
+            .height(55.dp)
+            .padding(8.dp)
     ) {
 
         BoxWithRes(
